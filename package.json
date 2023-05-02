@@ -19,6 +19,7 @@
   "node-red": {
     "nodes": {
       "send-message": "src/nodes/sendMessage/sendMessage.node.js",
+      "receive-message": "src/specialNodes/receiveMessage.js",
       "slack-auth": "src/nodes/slackAuth/slackAuth.node.js"
     }
   },
@@ -33,6 +34,9 @@
     "repository": {
       "type": "git",
       "url": "git+.git"
+    },
+    "origin": {
+      "moduleId": "645108bf7c0173001d9e583a"
     }
   },
   "dependencies": {

@@ -14,8 +14,8 @@ class SendMessage extends Node {
 
 	static schema = new Schema({
 		name: 'send-message',
-		label: 'send-message',
-		category: 'Maya Red Slack',
+		label: 'Send Slack message',
+		category: 'Slack',
 		isConfig: false,
 		fields: {
 			auth: new fields.ConfigNode({ type: SlackAuth, useAlias: true }),
