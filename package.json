@@ -19,7 +19,7 @@
   "node-red": {
     "nodes": {
       "send-message": "src/nodes/sendMessage/sendMessage.node.js",
-      "receive-message": "src/specialNodes/receiveMessage.js",
+      "receive-message": "src/specialNodes/receiveMessage/receiveMessage.js",
       "slack-auth": "src/nodes/slackAuth/slackAuth.node.js"
     }
   },
