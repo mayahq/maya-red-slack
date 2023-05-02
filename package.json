@@ -1,0 +1,42 @@
+{
+  "name": "maya-red-slack",
+  "version": "1.0.0",
+  "description": "Maya module to use integrate with Slack",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+.git"
+  },
+  "author": "dush-t",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mayahq/mayadev/issues"
+  },
+  "homepage": "#readme",
+  "nodepath": "src/nodes",
+  "nodeRedModuleName": "maya-red-slack",
+  "node-red": {
+    "nodes": {
+      "send-message": "src/nodes/sendMessage/sendMessage.node.js",
+      "slack-auth": "src/nodes/slackAuth/slackAuth.node.js"
+    }
+  },
+  "mayaDetails": {
+    "name": "maya-red-slack",
+    "version": "1.0.0",
+    "description": "Maya module to use integrate with Slack",
+    "author": "dush-t",
+    "type": "git",
+    "needsUserProfile": false,
+    "thumbnail": "",
+    "repository": {
+      "type": "git",
+      "url": "git+.git"
+    }
+  },
+  "dependencies": {
+    "@mayahq/module-sdk": "^3.0.1",
+    "@slack/web-api": "^6.8.1"
+  }
+}

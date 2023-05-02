@@ -1,0 +1,196 @@
+<script type='text/javascript'>
+    RED.nodes.registerType("send-message", {
+        category: "Maya Red Slack",
+        color: "#8BBDD9",
+        defaults: {
+            name: {
+                value: ""
+            },
+            isProfileConfigNode: {
+                value: false
+            },
+            auth: {
+                value: "",
+                type: "slack-auth",
+                required: true
+            },
+            channelName: {
+                value: "payload.slackChannelName",
+                required: false
+            },
+            payloadTypechannelName: {
+                value: "msg"
+            },
+            channelId: {
+                value: "payload.slackChannelId",
+                required: false
+            },
+            payloadTypechannelId: {
+                value: "msg"
+            },
+            sendBy: {
+                value: "name"
+            },
+            message: {
+                value: "payload.slackMessage",
+                required: false
+            },
+            payloadTypemessage: {
+                value: "msg"
+            },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "fa-file-code-o.png",
+        label: function() {
+            return this.name || "send-message"
+        },
+        paletteLabel: "send-message",
+        exportable: true,
+        oneditprepare: function() {
+            if (this.payloadTypechannelName === null) {
+                if (this.channelName === "") {
+                    this.payloadTypechannelName = "date"
+                } else {
+                    this.payloadTypechannelName = "msg"
+                }
+            } else if (this.payloadTypechannelName === 'string' || this.payloadTypechannelName === 'none') {
+                this.payloadTypechannelName = "msg"
+            }
+
+            $("#node-input-payloadTypechannelName").val(this.payloadTypechannelName)
+            $("#node-input-channelName").typedInput({
+                default: "msg",
+                typeField: $("#node-input-payloadTypechannelName"),
+                types: ["str", "msg", "flow", "global"]
+            })
+            $("#node-input-channelName").typedInput("type", this.payloadTypechannelName)
+
+            if (this.payloadTypechannelId === null) {
+                if (this.channelId === "") {
+                    this.payloadTypechannelId = "date"
+                } else {
+                    this.payloadTypechannelId = "msg"
+                }
+            } else if (this.payloadTypechannelId === 'string' || this.payloadTypechannelId === 'none') {
+                this.payloadTypechannelId = "msg"
+            }
+
+            $("#node-input-payloadTypechannelId").val(this.payloadTypechannelId)
+            $("#node-input-channelId").typedInput({
+                default: "msg",
+                typeField: $("#node-input-payloadTypechannelId"),
+                types: ["str", "msg", "flow", "global"]
+            })
+            $("#node-input-channelId").typedInput("type", this.payloadTypechannelId)
+
+
+            const sendByFieldSetNames = ["name", "ID"]
+            const nameMap_74 = {}
+            sendByFieldSetNames.forEach((fieldSetName) => {
+                $("#node-input-sendBy").append($("<option></option>").attr("value", fieldSetName).text(nameMap_74[fieldSetName] ? nameMap_74[fieldSetName] : fieldSetName))
+            })
+
+            $("#node-input-sendBy").val(this.sendBy)
+            $("#node-input-sendBy").on("change", (e) => {
+                const newFieldSet = e.target.value
+                sendByFieldSetNames.forEach((fieldSetName) => {
+                    if (fieldSetName !== newFieldSet) {
+                        document.querySelector("div#fieldset-" + fieldSetName).style.display = 'none'
+                    }
+                })
+                document.querySelector("div#fieldset-" + newFieldSet).style.display = ''
+                $("#node-input-sendBy").val(e.target.value)
+            })
+
+            if (this.payloadTypemessage === null) {
+                if (this.message === "") {
+                    this.payloadTypemessage = "date"
+                } else {
+                    this.payloadTypemessage = "msg"
+                }
+            } else if (this.payloadTypemessage === 'string' || this.payloadTypemessage === 'none') {
+                this.payloadTypemessage = "msg"
+            }
+
+            $("#node-input-payloadTypemessage").val(this.payloadTypemessage)
+            $("#node-input-message").typedInput({
+                default: "msg",
+                typeField: $("#node-input-payloadTypemessage"),
+                types: ["json", "str", "msg", "flow", "global"]
+            })
+            $("#node-input-message").typedInput("type", this.payloadTypemessage)
+
+        },
+        oneditsave: function() {},
+        oneditcancel: function() {},
+        oneditdelete: function() {},
+        oneditresize: function() {},
+        onpaletteadd: function() {},
+        onpaletteremove: function() {}
+    });
+</script>
+
+<script type="text/html" data-template-name="send-message">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" style="width:70%;" placeholder="Name" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-auth">auth</label>
+        <input type="text" id="node-input-auth"></input>
+    </div>
+    <div class="form-row">
+        <label for="node-input-sendBy">sendBy</label>
+        <select type="text" id="node-input-sendBy">
+        </select>
+    </div>
+    <div id="fieldset-name" style="padding-left: 10px;">
+        <div class="form-row">
+            <label for="node-input-channelName">Channel name</label>
+            <input type="text" id="node-input-channelName"></input>
+            <input type="hidden" id="node-input-payloadTypechannelName">
+        </div>
+    </div>
+
+    <div id="fieldset-ID" style="padding-left: 10px;">
+        <div class="form-row">
+            <label for="node-input-channelId">Channel ID</label>
+            <input type="text" id="node-input-channelId"></input>
+            <input type="hidden" id="node-input-payloadTypechannelId">
+        </div>
+    </div>
+    <div class="form-row">
+        <label for="node-input-message">Message</label>
+        <input type="text" id="node-input-message"></input>
+        <input type="hidden" id="node-input-payloadTypemessage">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="send-message">
+    <h2>Description</h2>
+    <p>The node docs</p>
+
+    <h2>Config</h2>
+    <dl class="message-properties">
+
+        <dt>payload<span class="property-type">various</span></dt>
+        <dd>The configured payload of the message.</dd>
+
+        <dt class="optional">topic <span class="property-type">string</span></dt>
+        <dd>An optional property</dd>
+
+    </dl>
+
+
+    <h2>Outputs</h2>
+    <dl class="message-properties">
+
+        <dt>payload<span class="property-type">various</span></dt>
+        <dd>The configured payload of the message.</dd>
+
+        <dt class="optional">topic <span class="property-type">string</span></dt>
+        <dd>An optional property</dd>
+
+    </dl>
+</script>
