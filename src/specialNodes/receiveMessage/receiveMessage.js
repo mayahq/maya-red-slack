@@ -154,6 +154,8 @@ module.exports = function (RED) {
 			this.callback = async function (req, res) {
 				if (req.body.challenge) {
 					return res.send(req.body.challenge)
+				} else {
+					res.status(200).send()
 				}
 				
 				node.sendExecStatus('running')
@@ -165,7 +167,6 @@ module.exports = function (RED) {
 				node.send({
 					_msgid: msgid,
 					req: req,
-					res: createResponseWrapper(node, res),
 					payload: req.body,
 					...receivedMsg
 				});
