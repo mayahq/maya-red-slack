@@ -152,14 +152,14 @@ module.exports = function (RED) {
 			};
 
 			this.callback = async function (req, res) {
-				if (req.body.challende) {
+				if (req.body.challenge) {
 					return res.send(req.body.challenge)
 				}
 				
 				node.sendExecStatus('running')
 				var msgid = RED.util.generateId();
 				res._msgid = msgid;
-				
+
 				const receivedMsg = req.body.data
 				
 				node.send({
