@@ -41,6 +41,13 @@
   },
   "dependencies": {
     "@mayahq/module-sdk": "^3.0.1",
-    "@slack/web-api": "^6.8.1"
+    "@slack/web-api": "^6.8.1",
+    "body-parser": "^1.20.2",
+    "content-type": "^1.0.5",
+    "cors": "^2.8.5",
+    "is-utf8": "^0.2.1",
+    "media-typer": "^1.1.0",
+    "on-headers": "^1.0.2",
+    "raw-body": "^2.5.2"
   }
 }

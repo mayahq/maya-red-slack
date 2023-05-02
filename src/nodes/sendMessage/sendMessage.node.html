@@ -1,6 +1,6 @@
 <script type='text/javascript'>
     RED.nodes.registerType("send-message", {
-        category: "Maya Red Slack",
+        category: "Slack",
         color: "#8BBDD9",
         defaults: {
             name: {
@@ -43,9 +43,9 @@
         outputs: 1,
         icon: "fa-file-code-o.png",
         label: function() {
-            return this.name || "send-message"
+            return this.name || "Send Slack message"
         },
-        paletteLabel: "send-message",
+        paletteLabel: "Send Slack message",
         exportable: true,
         oneditprepare: function() {
             if (this.payloadTypechannelName === null) {
@@ -86,9 +86,9 @@
 
 
             const sendByFieldSetNames = ["name", "ID"]
-            const nameMap_74 = {}
+            const nameMap_157 = {}
             sendByFieldSetNames.forEach((fieldSetName) => {
-                $("#node-input-sendBy").append($("<option></option>").attr("value", fieldSetName).text(nameMap_74[fieldSetName] ? nameMap_74[fieldSetName] : fieldSetName))
+                $("#node-input-sendBy").append($("<option></option>").attr("value", fieldSetName).text(nameMap_157[fieldSetName] ? nameMap_157[fieldSetName] : fieldSetName))
             })
 
             $("#node-input-sendBy").val(this.sendBy)
