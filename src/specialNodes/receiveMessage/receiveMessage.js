@@ -14,48 +14,6 @@
  * limitations under the License.
  **/
 
-const axios = require('axios')
-const { AUTH_SERVICE_URL } = require('../../constants')
-
-
-const checkTokens = async (req) => {
-    const authHeader = req.headers['Authorization']
-    const apiKey = req.headers['x-api-key']
-
-
-    if (!authHeader && !apiKey) {
-        return false
-    }
-
-    const request = {
-        url: `${AUTH_SERVICE_URL}/auth/validate`,
-        method: 'POST',
-        headers: {}
-    }
-
-    if (apiKey) {
-        request.headers['x-api-key'] = apiKey
-    } else if (authHeader) {
-        request.headers['Authorization'] = authHeader
-    }
-
-    try {
-        const response = await axios(request)
-        const userDetails = response.data.user
-        const { access } = userDetails
-
-        console.log('the owner', process.env.OWNER_ID)
-        console.log('the access', access)
-        return access.some(accessDetails => accessDetails.slug === process.env.OWNER_ID)
-    } catch (e) {
-        if (e.response) {
-            console.log('Receive node: Error sending auth request', e.response.status, e.response.data)
-        } else {
-            console.log('Receive node: Error sending auth request', e)
-        }
-        return false
-    }
-}
 
 module.exports = function (RED) {
 	'use strict';
@@ -197,11 +155,6 @@ module.exports = function (RED) {
 				node.sendExecStatus('running')
 				var msgid = RED.util.generateId();
 				res._msgid = msgid;
-
-                const isAuthorized = await checkTokens(req)
-                if (!isAuthorized) {
-                    return res.status(401).send('Unauthorized')
-                }
 
 				const receivedMsg = req.body.data
 				node.send({
