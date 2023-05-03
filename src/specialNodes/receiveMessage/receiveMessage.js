@@ -167,7 +167,9 @@ module.exports = function (RED) {
 				node.send({
 					_msgid: msgid,
 					req: req,
-					payload: req.body,
+					payload: {
+						slackMessage: req.body.event
+					},
 					...receivedMsg
 				});
 
