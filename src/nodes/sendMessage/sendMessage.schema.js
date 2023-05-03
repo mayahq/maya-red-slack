@@ -40,6 +40,12 @@ class SendMessage extends Node {
 					},
 				},
 			}),
+            thread: new fields.Typed({
+                type: 'msg',
+                allowedTypes: DST,
+                defaultVal: 'payload.slackMessage.thread_ts',
+                displayName: 'Thread (optional)'
+            }),
 			message: new fields.Typed({
 				type: 'msg',
 				allowedTypes: ['json', ...DST],
@@ -68,12 +74,20 @@ class SendMessage extends Node {
             channelId = vals.sendBy.childValues.channelId
         }
 
-        if (typeof vals.message === 'string') {
-            await web.chat.postMessage({
-                channel: channelId,
-                text: vals.message
-            })
+        let message = {
+            channel: channelId
         }
+        if (typeof vals.message === 'string') {
+            message.mrkdwn = vals.message
+        } else if (typeof vals.message === 'object') {
+            msg.blocks = vals.message
+        }
+
+        if (vals.thread) {
+            msg.thread_ts = vals.thread
+        }
+
+        await web.chat.postMessage(message)
 
         return msg
 	}
