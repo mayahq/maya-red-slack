@@ -78,7 +78,7 @@ class SendMessage extends Node {
             channel: channelId
         }
         if (typeof vals.message === 'string') {
-            message.mrkdwn = vals.message
+            message.text = vals.message
         } else if (typeof vals.message === 'object') {
             msg.blocks = vals.message
         }
