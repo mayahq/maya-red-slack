@@ -31,6 +31,13 @@
             sendBy: {
                 value: "name"
             },
+            thread: {
+                value: "payload.slackMessage.thread_ts",
+                required: false
+            },
+            payloadTypethread: {
+                value: "msg"
+            },
             message: {
                 value: "payload.slackMessage",
                 required: false
@@ -86,9 +93,9 @@
 
 
             const sendByFieldSetNames = ["name", "ID"]
-            const nameMap_157 = {}
+            const nameMap_944 = {}
             sendByFieldSetNames.forEach((fieldSetName) => {
-                $("#node-input-sendBy").append($("<option></option>").attr("value", fieldSetName).text(nameMap_157[fieldSetName] ? nameMap_157[fieldSetName] : fieldSetName))
+                $("#node-input-sendBy").append($("<option></option>").attr("value", fieldSetName).text(nameMap_944[fieldSetName] ? nameMap_944[fieldSetName] : fieldSetName))
             })
 
             $("#node-input-sendBy").val(this.sendBy)
@@ -102,6 +109,24 @@
                 document.querySelector("div#fieldset-" + newFieldSet).style.display = ''
                 $("#node-input-sendBy").val(e.target.value)
             })
+
+            if (this.payloadTypethread === null) {
+                if (this.thread === "") {
+                    this.payloadTypethread = "date"
+                } else {
+                    this.payloadTypethread = "msg"
+                }
+            } else if (this.payloadTypethread === 'string' || this.payloadTypethread === 'none') {
+                this.payloadTypethread = "msg"
+            }
+
+            $("#node-input-payloadTypethread").val(this.payloadTypethread)
+            $("#node-input-thread").typedInput({
+                default: "msg",
+                typeField: $("#node-input-payloadTypethread"),
+                types: ["str", "msg", "flow", "global"]
+            })
+            $("#node-input-thread").typedInput("type", this.payloadTypethread)
 
             if (this.payloadTypemessage === null) {
                 if (this.message === "") {
@@ -159,6 +184,11 @@
             <input type="text" id="node-input-channelId"></input>
             <input type="hidden" id="node-input-payloadTypechannelId">
         </div>
+    </div>
+    <div class="form-row">
+        <label for="node-input-thread">Thread (optional)</label>
+        <input type="text" id="node-input-thread"></input>
+        <input type="hidden" id="node-input-payloadTypethread">
     </div>
     <div class="form-row">
         <label for="node-input-message">Message</label>
