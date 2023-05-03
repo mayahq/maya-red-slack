@@ -170,6 +170,7 @@ module.exports = function (RED) {
 					payload: {
 						slackMessage: req.body.event
 					},
+					slackMeta: req.body,
 					...receivedMsg
 				});
 
